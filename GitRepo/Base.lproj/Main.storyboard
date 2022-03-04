@@ -175,7 +175,19 @@
                             <constraint firstItem="hgq-Lg-Fwj" firstAttribute="bottom" secondItem="ts2-0m-9mc" secondAttribute="bottom" id="iOy-cI-tlA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Repositories" id="psu-x7-jae"/>
+                    <navigationItem key="navigationItem" title="Repositories" id="psu-x7-jae">
+                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="bZm-MC-ajS">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Yhc-1H-TtV">
+                                <rect key="frame" x="302" y="6" width="92" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="Vector"/>
+                                <connections>
+                                    <action selector="exitAccount:" destination="8dh-dA-9fg" eventType="touchUpInside" id="l98-C1-7vw"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="ts2-0m-9mc" id="N32-Gm-l0K"/>
                         <segue destination="eCN-ou-pvD" kind="show" identifier="goToRepo" id="oS9-p9-An0"/>
@@ -257,6 +269,7 @@
     </scenes>
     <resources>
         <image name="Group" width="96" height="96"/>
+        <image name="Vector" width="22" height="18"/>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
