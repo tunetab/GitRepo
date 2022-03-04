@@ -13,7 +13,7 @@ enum RepoErrors: Error {
     case validationFailed
 }
 
-class AppLogic {
+class AppRepository {
     
     func signIn(token: String, completion: @escaping (UserInfo?, Error?) -> Void) {
         let headers: HTTPHeaders = [
@@ -23,7 +23,7 @@ class AppLogic {
             switch responseData.result {
             case .success(let value):
                 if let decodedData = try? JSONDecoder().decode(UserInfo.self, from: value) {
-                    print(decodedData)
+                    print("user \(decodedData.username) auth")
                     completion(decodedData, nil)
                 } else {
                     completion(nil, RepoErrors.validationFailed)
@@ -36,7 +36,8 @@ class AppLogic {
     }
     
     func getRepositories(completion: @escaping ([Repo]?, Error?) -> Void) {
-        guard let token = KeyValueStorage.shared.authToken else {
+        guard let token = KeyValueStorage.shared.authToken,
+            let username = KeyValueStorage.shared.userName else {
             completion(nil, RepoErrors.accessTokenIsMissing)
             return
         }
@@ -60,7 +61,28 @@ class AppLogic {
     }
     
     func getRepository(repoId: String, completion: @escaping (RepoDetails?, Error?) -> Void) {
-        // TODO:
+        guard let token = KeyValueStorage.shared.authToken,
+            let username = KeyValueStorage.shared.userName else {
+            completion(nil, RepoErrors.accessTokenIsMissing)
+            return
+        }
+        let headers: HTTPHeaders = [
+            "Authorization": "token \(token)"
+        ]
+        request("https://api.github.com/repos/\(username)/\(repoId)", headers: headers).validate().responseData { responseData in
+            switch responseData.result {
+            case .success(let value):
+                if let decodedData = try? JSONDecoder().decode(RepoDetails.self, from: value) {
+                    print(decodedData)
+                    completion(decodedData, nil)
+                } else {
+                    completion(nil, RepoErrors.validationFailed)
+                    return
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
     }
           
     func getRepositoryReadme(ownerName: String, repositoryName: String, branchName: String, completion: @escaping (String?, Error?) -> Void) {

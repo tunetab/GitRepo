@@ -31,7 +31,7 @@ extension ResponseStatus {
 }
 
 class AuthViewController: UIViewController {
-    let appLogic = AppLogic()
+    let appLogic = AppRepository()
     
     @IBOutlet private var tokenTextField: UITextField!
     @IBOutlet private var errorLabel: UILabel!
@@ -46,6 +46,11 @@ class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tokenTextField.text = nil
     }
     
     // MARK: setView()
@@ -63,9 +68,7 @@ class AuthViewController: UIViewController {
         tokenTextField.leftViewMode = .always
         tokenTextField.rightView = paddingView
         tokenTextField.rightViewMode = .always
-        
 
-        
         setBorderColor(status: textStatus)
         
         buttonConstraint = authButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
@@ -104,7 +107,7 @@ class AuthViewController: UIViewController {
                     KeyValueStorage.shared.authToken = token
                     KeyValueStorage.shared.userName = user.username
                     
-                    self?.loadRepos()
+                    // TODO: Jump to RepoList
 
                 case (nil, let error):
                     if let error = error {
@@ -120,28 +123,6 @@ class AuthViewController: UIViewController {
             self.turnEverythingRed()
         }
         hideLoading()
-    }
-    
-    // MARK: loadRepos()
-    func loadRepos() {
-        appLogic.getRepositories{ [weak self] (repos, error) in
-            switch (repos, error) {
-            case (let repos, nil):
-                if let repos = repos {
-                    self?.openRepos(repos: repos)
-                } else {
-                    print("repos missed in loadRepos() func")
-                }
-            case (nil, let error):
-                if let error = error {
-                    self?.turnEverythingRed()
-                    print(error)
-                }
-            default:
-                print("switch in loadRepos get default")
-                return
-            }
-        }
     }
     
     // MARK: textFieldTarget

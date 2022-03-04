@@ -11,6 +11,7 @@ private enum CodingLang: String {
     case kotlin = "Kotlin"
     case swift = "Swift"
     case javaScript = "JavaScript"
+    case python = "Python"
 }
 
 extension CodingLang {
@@ -23,6 +24,8 @@ extension CodingLang {
                 return UIColor(red: 240.0/255, green: 81.0/255, blue: 56.0/255, alpha: 1.0)
             case .javaScript:
                 return UIColor(red: 244.0/255, green: 226.0/255, blue: 100.0/255, alpha: 1.0)
+            case .python:
+                return UIColor(red: 53.0/255, green: 114.0/255, blue: 165.0/255, alpha: 1.0)
             }
         }
     }

@@ -10,23 +10,56 @@ import Alamofire
 
 class RepositoriesListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    let appLogic = AppRepository()
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var repos: [Repo]?
     
     //MARK: viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
+        setView()
+        loadRepos()
+    }
+    
+    // MARK: reloadView()
+    func loadDataSource() {
+        self.activityIndicator.stopAnimating()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        updateView()
     }
-    func updateView() {
-        
-        self.navigationController?.isNavigationBarHidden = false
+    
+    // MARK: setView()
+    func setView() {
         self.view.backgroundColor = .black
         self.tableView.backgroundColor = .black
         self.navigationItem.hidesBackButton = true
+    }
+    
+    // MARK: loadRepos()
+    func loadRepos() {
+        appLogic.getRepositories{ [weak self] (repos, error) in
+            switch (repos, error) {
+            case (let repos, nil):
+                if let repos = repos {
+                    self?.repos = repos
+                    self?.loadDataSource()
+                } else {
+                    print("repos missed in loadRepos() func")
+                }
+            case (nil, let error):
+                if let error = error {
+                    print(error)
+                    if error as! RepoErrors == RepoErrors.accessTokenIsMissing {
+                        self?.navigationController?.title = "Access Token is Invalid"
+                    }
+                }
+            default:
+                print("switch in loadRepos get default")
+                return
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -74,12 +107,12 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
         }
     }
     @IBAction func exitAccount(_ sender: Any) {
-        print("user \(KeyValueStorage.shared.userName) quited account")
-        print(KeyValueStorage.shared.userName)
+        print("user \(String(describing: KeyValueStorage.shared.userName)) quited account")
+
         KeyValueStorage.shared.authToken = nil
         KeyValueStorage.shared.userName = nil
-        print(KeyValueStorage.shared.userName)
-        navigationController?.popViewController(animated: true)
+
+        // TODO: jump to AuthController
     }
     
 }

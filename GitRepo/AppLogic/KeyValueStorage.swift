@@ -25,7 +25,7 @@ class KeyValueStorage {
     private func unarchiveJSON<T: Decodable>(key: String) -> T? {
         guard let string = defaults.string(forKey: key),
               let data = string.data(using: .utf8) else { return nil }
-        return try! JSONDecoder().decode(T.self, from: data)
+        return try? JSONDecoder().decode(T.self, from: data)
     }
     
     var authToken: String? {

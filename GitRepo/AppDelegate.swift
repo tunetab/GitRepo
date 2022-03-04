@@ -10,10 +10,17 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    let userDefaults = KeyValueStorage()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//
+//        if let _ = userDefaults.authToken {
+//            window = UIWindow(frame: UIScreen.main.bounds)
+//            window?.rootViewController = RepositoriesListViewController()
+//            window?.makeKeyAndVisible()
+//        }
+//        
         return true
     }
 

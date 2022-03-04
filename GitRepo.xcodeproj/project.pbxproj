@@ -23,7 +23,7 @@
 		ECCB931D27CE24B000BDB568 /* GitRepoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB931C27CE24B000BDB568 /* GitRepoUITests.swift */; };
 		ECCB931F27CE24B000BDB568 /* GitRepoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB931E27CE24B000BDB568 /* GitRepoUITestsLaunchTests.swift */; };
 		ECCB932C27CE251600BDB568 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB932B27CE251600BDB568 /* Repository.swift */; };
-		ECCB932F27CE264D00BDB568 /* AppLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB932E27CE264D00BDB568 /* AppLogic.swift */; };
+		ECCB932F27CE264D00BDB568 /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB932E27CE264D00BDB568 /* AppRepository.swift */; };
 		ECCB933427CE2C6600BDB568 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB933327CE2C6600BDB568 /* AuthViewController.swift */; };
 		ECCB933827CE3DA700BDB568 /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB933727CE3DA700BDB568 /* RepoTableViewCell.swift */; };
 		ECCB933B27CE3E9500BDB568 /* RepoListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB933A27CE3E9500BDB568 /* RepoListTableViewController.swift */; };
@@ -72,7 +72,7 @@
 		ECCB931C27CE24B000BDB568 /* GitRepoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoUITests.swift; sourceTree = "<group>"; };
 		ECCB931E27CE24B000BDB568 /* GitRepoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		ECCB932B27CE251600BDB568 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		ECCB932E27CE264D00BDB568 /* AppLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogic.swift; sourceTree = "<group>"; };
+		ECCB932E27CE264D00BDB568 /* AppRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRepository.swift; sourceTree = "<group>"; };
 		ECCB933327CE2C6600BDB568 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		ECCB933727CE3DA700BDB568 /* RepoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoTableViewCell.swift; sourceTree = "<group>"; };
 		ECCB933A27CE3E9500BDB568 /* RepoListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoListTableViewController.swift; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 		EC7A191A27D1D65400360BCF /* AppLogic */ = {
 			isa = PBXGroup;
 			children = (
-				ECCB932E27CE264D00BDB568 /* AppLogic.swift */,
+				ECCB932E27CE264D00BDB568 /* AppRepository.swift */,
 				EC7A191627D1D25900360BCF /* KeyValueStorage.swift */,
 			);
 			path = AppLogic;
@@ -470,7 +470,7 @@
 				EC7A191C27D1D68F00360BCF /* RepoDetails.swift in Sources */,
 				ECCB933827CE3DA700BDB568 /* RepoTableViewCell.swift in Sources */,
 				ECCB933B27CE3E9500BDB568 /* RepoListTableViewController.swift in Sources */,
-				ECCB932F27CE264D00BDB568 /* AppLogic.swift in Sources */,
+				ECCB932F27CE264D00BDB568 /* AppRepository.swift in Sources */,
 				EC7A191927D1D64500360BCF /* UserInfo.swift in Sources */,
 				ECCB932C27CE251600BDB568 /* Repository.swift in Sources */,
 			);
