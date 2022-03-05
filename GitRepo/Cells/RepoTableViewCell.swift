@@ -38,14 +38,6 @@ class RepoTableViewCell: UITableViewCell {
     @IBOutlet private var repoNameLabel: UILabel!
     @IBOutlet private var languageLabel: UILabel!
     @IBOutlet private var descriptionLabel: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     func updateCell(repo: Repo) {
         repoNameLabel.text = repo.name

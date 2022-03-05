@@ -95,9 +95,6 @@ class AuthViewController: UIViewController {
     //MARK: AuthAction
     @IBAction private func auth(_ sender: Any) {
         showLoading()
-        self.errorLabel.isHidden = true
-        setBorderColor(status: tokenTextField.isFirstResponder ? .active : .disabled)
-        
         if let token = tokenTextField.text, token.isEmpty == false {
             appLogic.signIn(token: token) { [weak self] (userInfo, error) in
                 switch (userInfo, error) {
