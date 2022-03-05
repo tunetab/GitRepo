@@ -86,7 +86,30 @@ class AppRepository {
     }
           
     func getRepositoryReadme(ownerName: String, repositoryName: String, branchName: String, completion: @escaping (String?, Error?) -> Void) {
-        // TODO:
+        guard let token = KeyValueStorage.shared.authToken,
+            let username = KeyValueStorage.shared.userName else {
+            completion(nil, RepoErrors.accessTokenIsMissing)
+            return
+        }
+        let headers: HTTPHeaders = [
+            "Authorization": "token \(token)",
+            "Accept": "application/vnd.github.v3+json"
+        ]
+        request("https://api.github.com/repos/\(ownerName)/\(repositoryName)/readme", headers: headers).validate().responseData { responseData in
+            switch responseData.result {
+            case .success(let value):
+                if let decodedData = try? JSONDecoder().decode(ReadMe.self, from: value) {
+                    print(decodedData)
+                    completion(decodedData.content, nil)
+                } else {
+                    completion(nil, RepoErrors.validationFailed)
+                    return
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+        
     }
 
 }

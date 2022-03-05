@@ -11,16 +11,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let userDefaults = KeyValueStorage()
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//
-//        if let _ = userDefaults.authToken {
-//            window = UIWindow(frame: UIScreen.main.bounds)
-//            window?.rootViewController = RepositoriesListViewController()
-//            window?.makeKeyAndVisible()
-//        }
-//        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+               
+        if let _ = userDefaults.authToken {
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "RepoListVC")
+            self.window?.rootViewController = initialViewController
+        }
+
         return true
     }
 

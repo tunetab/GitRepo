@@ -56,6 +56,7 @@ class AuthViewController: UIViewController {
     // MARK: setView()
     private func setView(){
         errorLabel.isHidden = true
+        activityIndicator.isHidden = true
         
         tokenTextField.layer.borderWidth = 1
         tokenTextField.layer.cornerRadius = 8
@@ -104,7 +105,7 @@ class AuthViewController: UIViewController {
                     KeyValueStorage.shared.authToken = token
                     KeyValueStorage.shared.userName = user.username
                     
-                    // TODO: Jump to RepoList
+                    self?.openRepos()
 
                 case (nil, let error):
                     if let error = error {
@@ -159,15 +160,8 @@ class AuthViewController: UIViewController {
     }
     
     // MARK: Segues
-    private func openRepos(repos: [Repo]) {
-        performSegue(withIdentifier: "toRepos", sender: repos)
+    private func openRepos() {
+        performSegue(withIdentifier: "toRepos", sender: nil)
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "toRepos",
-              let reposVC = segue.destination as? RepositoriesListViewController else { return }
-        
-        if let repos = sender as? [Repo] {
-            reposVC.repos = repos
-        }
-    }
+
 }

@@ -27,9 +27,6 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
                 self?.loadDataSource(repos: repos!)
             case (nil, let error):
                 print(error)
-                if error as? RepoErrors == RepoErrors.accessTokenIsMissing {
-                    self?.navigationController?.title = "Access Token is Invalid"
-                }
             default:
                 print("switch in in RepoList get default")
                 return
@@ -47,10 +44,10 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
     // MARK: setView()
     func setView() {
         self.view.backgroundColor = .black
-        self.tableView.backgroundColor = .black
         self.navigationItem.hidesBackButton = true
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView?.backgroundColor = .black
     }
     
     // MARK: - Table view data source
@@ -106,7 +103,7 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
         KeyValueStorage.shared.authToken = nil
         KeyValueStorage.shared.userName = nil
 
-        // TODO: jump to AuthController
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 }
