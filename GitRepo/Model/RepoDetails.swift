@@ -9,9 +9,9 @@ import Foundation
 
 struct RepoDetails: Codable {
     var html_url: String
-    var watchers_count: Int?
-    var stargazers_count: Int?
-    var forks_count: Int?
+    var watchers_count: Int
+    var stargazers_count: Int
+    var forks_count: Int
     var license: License?
     
     enum CodingKeys: CodingKey {
