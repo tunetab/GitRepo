@@ -33,6 +33,7 @@ class RepositoryDetailInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         scrollView.isHidden = true
+        readmeLabel.isHidden = true
         activityIndicator.startAnimating()
         activityIndicator.isHidden = false
         
@@ -59,6 +60,7 @@ class RepositoryDetailInfoViewController: UIViewController {
             switch (readme, error) {
             case (let content, nil):
                 self?.readmeLabel.text = content?.base64Decoded()
+                self?.readmeLabel.isHidden = false
             case (nil, let error):
                 print(error!)
                 

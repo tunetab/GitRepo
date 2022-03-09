@@ -37,7 +37,7 @@ class AppRepository {
     
     func getRepositories(completion: @escaping ([Repo]?, Error?) -> Void) {
         guard let token = KeyValueStorage.shared.authToken,
-            let username = KeyValueStorage.shared.userName else {
+            let _ = KeyValueStorage.shared.userName else {
             completion(nil, RepoErrors.accessTokenIsMissing)
             return
         }
@@ -94,7 +94,7 @@ class AppRepository {
         let headers: HTTPHeaders = [
             "Accept": "application/vnd.github.v3+json"
         ]
-        request("https://api.github.com/repos/spotify/web-api-auth-examples/readme", headers: headers).responseData { responseData in
+        request("https://api.github.com/repos/\(ownerName)/\(repositoryName)/readme", headers: headers).responseData { responseData in
             switch responseData.result {
             case .success(let value):
                 if let decodedData = try? JSONDecoder().decode(ReadMe.self, from: value) {
