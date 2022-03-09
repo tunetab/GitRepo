@@ -20,13 +20,23 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.isHidden = true
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
         
         appLogic.getRepositories{ [weak self] (repos, error) in
             switch (repos, error) {
             case (let repos, nil):
                 self?.loadDataSource(repos: repos!)
             case (nil, let error):
-                print(error)
+                print(error!)
+                if error as? RepoErrors == RepoErrors.accessTokenIsMissing {
+                    self?.exitAccount()
+                }
             default:
                 print("switch in in RepoList get default")
                 return
@@ -38,6 +48,7 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
     func loadDataSource(repos: [Repo]) {
         self.activityIndicator.stopAnimating()
         self.repos = repos
+        self.tableView.isHidden = false
         self.tableView.reloadData()
     }
     
@@ -77,33 +88,31 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
     //MARK: Segues
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = repos?[indexPath.item]
-        
         if let item = item {
             self.openRepo(repo: item)
         }
     }
     
     func openRepo(repo: Repo) {
-        performSegue(withIdentifier: "goToRepo", sender: repo)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "goToRepo",
-              let repoDetailVC = segue.destination as? RepositoryDetailInfoViewController else { return }
-        
-        if let repo = sender as? Repo {
+        if let repoDetailVC = storyboard?.instantiateViewController(withIdentifier: "RepoDetailVC") as? RepositoryDetailInfoViewController {
             repoDetailVC.repo = repo
+            self.navigationController?.pushViewController(repoDetailVC, animated: true)
         }
     }
     
     // MARK: exitAccount()
-    @IBAction func exitAccount(_ sender: Any) {
+    @IBAction func exitButtonPushed(_ sender: Any) {
         print("user \(String(describing: KeyValueStorage.shared.userName)) quited account")
 
         KeyValueStorage.shared.authToken = nil
         KeyValueStorage.shared.userName = nil
 
-        self.navigationController?.popToRootViewController(animated: true)
+        self.exitAccount()
     }
     
+    func exitAccount() {
+        if let authVC = storyboard?.instantiateViewController(withIdentifier: "AuthVC") as? AuthViewController {
+            self.navigationController?.setViewControllers([authVC], animated: true)
+        }
+    }
 }

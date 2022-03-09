@@ -16,10 +16,14 @@ class KeyValueStorage {
     static var shared = KeyValueStorage()
     private var defaults = UserDefaults.standard
     
-    private func archiveJSON<T: Encodable>(value: T, key: String) {
-        let data = try! JSONEncoder().encode(value)
-        let string = String(data: data, encoding: .utf8)
-        defaults.set(string, forKey: key)
+    private func archiveJSON<T: Encodable>(value: T?, key: String) {
+        if let value = value {
+            let data = try! JSONEncoder().encode(value)
+            let string = String(data: data, encoding: .utf8)
+            defaults.set(string, forKey: key)
+        } else {
+            defaults.removeObject(forKey: key)
+        }
     }
     
     private func unarchiveJSON<T: Decodable>(key: String) -> T? {

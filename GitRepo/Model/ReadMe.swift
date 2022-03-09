@@ -8,5 +8,9 @@
 import Foundation
 
 struct ReadMe: Codable {
-    var content: String
+    var content: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case content
+    }
 }

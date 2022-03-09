@@ -10,35 +10,25 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    let userDefaults = KeyValueStorage()
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let window = UIWindow()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                
-        if let _ = userDefaults.authToken {
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "RepoListVC")
-            self.window?.rootViewController = initialViewController
+        if UserDefaults.standard.object(forKey: "token") != nil {
+            let repoVC = storyboard.instantiateViewController(withIdentifier: "ListNavigationVC")
+            window.rootViewController = repoVC
+        } else {
+            let authVC = storyboard.instantiateViewController(withIdentifier: "AuthNavigationVC")
+            window.rootViewController = authVC
         }
+        window.makeKeyAndVisible()
+        self.window = window
 
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-
 
 }
 

@@ -12,44 +12,61 @@ class RepositoryDetailInfoViewController: UIViewController {
     let appLogic = AppRepository()
 
     var repo: Repo?
-    var repoDetails: RepoDetails?
+    private var repoDetails: RepoDetails?
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var linkButton: UIButton!
-    @IBOutlet weak var licenseLabel: UILabel!
-    @IBOutlet weak var starsLabel: UILabel!
-    @IBOutlet weak var forksLabel: UILabel!
-    @IBOutlet weak var watchersLabel: UILabel!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private var linkButton: UIButton!
+    @IBOutlet private var licenseLabel: UILabel!
+    @IBOutlet private var starsLabel: UILabel!
+    @IBOutlet private var forksLabel: UILabel!
+    @IBOutlet private var watchersLabel: UILabel!
+    @IBOutlet private var readmeLabel: UILabel!
     
     
     // MARK: viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         scrollView.isHidden = true
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
         
-        guard let repoName = repo?.name else {
+        guard let repo = repo else {
             print("RepoId is Missing")
             return
         }
         
-        appLogic.getRepository(repoId: repoName) { [weak self] (repoDetail, error) in
+        appLogic.getRepository(repoId: repo.name) { [weak self] (repoDetail, error) in
             switch (repoDetail, error) {
             case (let repo, nil):
                 self?.reloadView(repo: repo!)
             case (nil, let error):
-                print(error)
+                print(error!)
+                if error as? RepoErrors == RepoErrors.accessTokenIsMissing {
+                    self?.exitAccount()
+                }
             default:
                 print("switch in RepoDetails get default")
                 return
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+        appLogic.getRepositoryReadme(ownerName: repo.owner.username, repositoryName: repo.name, branchName: "") { [weak self] (readme, error) in
+            switch (readme, error) {
+            case (let content, nil):
+                self?.readmeLabel.text = content?.base64Decoded()
+            case (nil, let error):
+                print(error!)
+                
+            default:
+                print("switch in RepoDetails get default")
+                return
+            }
+        }
     }
     
     //MARK: reloadView()
@@ -72,8 +89,8 @@ class RepositoryDetailInfoViewController: UIViewController {
             print("details missed")
             return
         }
-        linkButton.titleLabel?.text = repoDetails.html_url.getRidOfProtocol()
-        linkButton.titleLabel?.textColor = UIColor(red: 88.0/255, green: 166.0/255, blue: 255.0/255, alpha: 1.0)
+        linkButton.setTitle(repoDetails.html_url.getRidOfProtocol(), for: .normal)
+        linkButton.setTitleColor(UIColor(red: 88.0/255, green: 166.0/255, blue: 255.0/255, alpha: 1.0), for: .normal)
         
         licenseLabel.text = repoDetails.license?.name ?? "Unlicensed"
         starsLabel.text = String(repoDetails.stargazers_count)
@@ -92,25 +109,18 @@ class RepositoryDetailInfoViewController: UIViewController {
     }
     
     // MARK: exitAccount()
-    @IBAction func exitAccount(_ sender: Any) {
+    @IBAction func exitButtonPushed(_ sender: Any) {
         print("user \(String(describing: KeyValueStorage.shared.userName)) quited account")
 
         KeyValueStorage.shared.authToken = nil
         KeyValueStorage.shared.userName = nil
 
-        self.navigationController?.popToRootViewController(animated: true)
+        self.exitAccount()
     }
     
-}
-
-
-// MARK: extensions
-extension String {
-    func getRidOfProtocol() -> String {
-        var newUrl = self
-        if newUrl.contains("https://") {
-            newUrl = newUrl.replacingOccurrences(of: "https://", with: "", options: NSString.CompareOptions.literal, range: nil)
+    func exitAccount() {
+        if let authVC = storyboard?.instantiateViewController(withIdentifier: "AuthVC") as? AuthViewController {
+            self.navigationController?.setViewControllers([authVC], animated: true)
         }
-        return newUrl
     }
 }

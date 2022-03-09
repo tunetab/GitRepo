@@ -8,28 +8,6 @@
 import UIKit
 import Alamofire
 
-// MARK: ResponseStatusEnum
-private enum ResponseStatus {
-    case disabled
-    case active
-    case invalid
-}
-
-extension ResponseStatus {
-    var color: UIColor {
-        get {
-            switch self {
-            case .disabled:
-                return UIColor(red: 33.0/255, green: 38.0/255, blue: 45.0/255, alpha: 1.0)
-            case .active:
-                return UIColor(red: 88.0/255, green: 166.0/255, blue: 255.0/255, alpha: 1.0)
-            case .invalid:
-                return UIColor(red: 176.0/255, green: 0.0/255, blue: 32.0/255, alpha: 1.0)
-            }
-        }
-    }
-}
-
 class AuthViewController: UIViewController {
     let appLogic = AppRepository()
     
@@ -83,16 +61,6 @@ class AuthViewController: UIViewController {
         tokenTextField.addTarget(self, action: #selector(refreshBorderColor(_:)), for: .editingChanged)
     }
     
-    // MARK: borderColor()
-    private func setBorderColor(status: ResponseStatus) {
-        tokenTextField.layer.borderColor = status.color.cgColor
-    }
-    private func turnEverythingRed(){
-        self.textStatus = .invalid
-        setBorderColor(status: .invalid)
-        errorLabel.isHidden = false
-    }
-    
     //MARK: AuthAction
     @IBAction private func auth(_ sender: Any) {
         showLoading()
@@ -123,6 +91,16 @@ class AuthViewController: UIViewController {
         hideLoading()
     }
     
+    // MARK: borderColor()
+    private func setBorderColor(status: ResponseStatus) {
+        tokenTextField.layer.borderColor = status.color.cgColor
+    }
+    private func turnEverythingRed(){
+        self.textStatus = .invalid
+        setBorderColor(status: .invalid)
+        errorLabel.isHidden = false
+    }
+    
     // MARK: textFieldTarget
     @objc private func refreshBorderColor(_ textField: UITextField) {
         self.setBorderColor(status: tokenTextField.isFirstResponder ? .active : .disabled)
@@ -141,7 +119,6 @@ class AuthViewController: UIViewController {
     }
     @objc private func keyboardWillHide(_ notification: Notification) {
         setBorderColor(status: textStatus == .invalid ? .invalid : .disabled)
-        
         buttonConstraint?.constant = -50
     }
     
@@ -153,7 +130,6 @@ class AuthViewController: UIViewController {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
-    
     private func hideLoading() {
         authButton.setTitle(originalButtonText, for: .normal)
         activityIndicator.stopAnimating()
@@ -161,7 +137,8 @@ class AuthViewController: UIViewController {
     
     // MARK: Segues
     private func openRepos() {
-        performSegue(withIdentifier: "toRepos", sender: nil)
+        if let repoListVC = storyboard?.instantiateViewController(withIdentifier: "RepoListVC") as? RepositoriesListViewController {
+            self.navigationController?.pushViewController(repoListVC, animated: true)
+        }
     }
-
 }

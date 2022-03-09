@@ -10,13 +10,13 @@
 		169AF8FF069F78F00DA89439 /* Pods_GitRepo_GitRepoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F04D91337A64E648938E7D5 /* Pods_GitRepo_GitRepoUITests.framework */; };
 		67C001111EC51E14163CD8BA /* Pods_GitRepoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ABD7AA3363653210AE70117 /* Pods_GitRepoTests.framework */; };
 		B8CE6731EE587015BC10F624 /* Pods_GitRepo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192955D7F1A59FFD8C5CCDF3 /* Pods_GitRepo.framework */; };
+		EC793EE327D8A5AB0050BAE4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC793EE227D8A5AB0050BAE4 /* Extensions.swift */; };
 		EC7A191727D1D25900360BCF /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7A191627D1D25900360BCF /* KeyValueStorage.swift */; };
 		EC7A191927D1D64500360BCF /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7A191827D1D64500360BCF /* UserInfo.swift */; };
 		EC7A191C27D1D68F00360BCF /* RepoDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7A191B27D1D68F00360BCF /* RepoDetails.swift */; };
 		EC7AFD6C27D0CD43004E6E29 /* RepoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7AFD6B27D0CD43004E6E29 /* RepoDetailViewController.swift */; };
 		EC80C03727D351FD00F7928D /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC80C03627D351FD00F7928D /* ReadMe.swift */; };
 		ECCB92FC27CE24AE00BDB568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB92FB27CE24AE00BDB568 /* AppDelegate.swift */; };
-		ECCB92FE27CE24AE00BDB568 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB92FD27CE24AE00BDB568 /* SceneDelegate.swift */; };
 		ECCB930327CE24AE00BDB568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECCB930127CE24AE00BDB568 /* Main.storyboard */; };
 		ECCB930527CE24B000BDB568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECCB930427CE24B000BDB568 /* Assets.xcassets */; };
 		ECCB930827CE24B000BDB568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECCB930627CE24B000BDB568 /* LaunchScreen.storyboard */; };
@@ -55,6 +55,7 @@
 		C6160FE20F5F9F253E1442F7 /* Pods-GitRepo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitRepo.debug.xcconfig"; path = "Target Support Files/Pods-GitRepo/Pods-GitRepo.debug.xcconfig"; sourceTree = "<group>"; };
 		E93E35ED7D47F2AEF015DBB0 /* Pods-GitRepoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitRepoTests.release.xcconfig"; path = "Target Support Files/Pods-GitRepoTests/Pods-GitRepoTests.release.xcconfig"; sourceTree = "<group>"; };
 		EAEF06714C167FB5E13EFE16 /* Pods-GitRepoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitRepoTests.debug.xcconfig"; path = "Target Support Files/Pods-GitRepoTests/Pods-GitRepoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EC793EE227D8A5AB0050BAE4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EC7A191627D1D25900360BCF /* KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
 		EC7A191827D1D64500360BCF /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		EC7A191B27D1D68F00360BCF /* RepoDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetails.swift; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 		ECB8C6936A63CFFCB899DB62 /* Pods-GitRepo-GitRepoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitRepo-GitRepoUITests.debug.xcconfig"; path = "Target Support Files/Pods-GitRepo-GitRepoUITests/Pods-GitRepo-GitRepoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		ECCB92F827CE24AE00BDB568 /* GitRepo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitRepo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECCB92FB27CE24AE00BDB568 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ECCB92FD27CE24AE00BDB568 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		ECCB930227CE24AE00BDB568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ECCB930427CE24B000BDB568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ECCB930727CE24B000BDB568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -137,6 +137,7 @@
 			children = (
 				ECCB932E27CE264D00BDB568 /* AppRepository.swift */,
 				EC7A191627D1D25900360BCF /* KeyValueStorage.swift */,
+				EC793EE227D8A5AB0050BAE4 /* Extensions.swift */,
 			);
 			path = AppLogic;
 			sourceTree = "<group>";
@@ -167,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				ECCB92FB27CE24AE00BDB568 /* AppDelegate.swift */,
-				ECCB92FD27CE24AE00BDB568 /* SceneDelegate.swift */,
 				ECCB930127CE24AE00BDB568 /* Main.storyboard */,
 				ECCB932D27CE263200BDB568 /* Model */,
 				EC7A191A27D1D65400360BCF /* AppLogic */,
@@ -468,11 +468,11 @@
 				EC7A191727D1D25900360BCF /* KeyValueStorage.swift in Sources */,
 				ECCB92FC27CE24AE00BDB568 /* AppDelegate.swift in Sources */,
 				EC7AFD6C27D0CD43004E6E29 /* RepoDetailViewController.swift in Sources */,
-				ECCB92FE27CE24AE00BDB568 /* SceneDelegate.swift in Sources */,
 				ECCB933427CE2C6600BDB568 /* AuthViewController.swift in Sources */,
 				EC7A191C27D1D68F00360BCF /* RepoDetails.swift in Sources */,
 				ECCB933827CE3DA700BDB568 /* RepoTableViewCell.swift in Sources */,
 				ECCB933B27CE3E9500BDB568 /* RepoListTableViewController.swift in Sources */,
+				EC793EE327D8A5AB0050BAE4 /* Extensions.swift in Sources */,
 				ECCB932F27CE264D00BDB568 /* AppRepository.swift in Sources */,
 				EC80C03727D351FD00F7928D /* ReadMe.swift in Sources */,
 				EC7A191927D1D64500360BCF /* UserInfo.swift in Sources */,
