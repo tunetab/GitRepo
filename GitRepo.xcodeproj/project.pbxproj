@@ -171,7 +171,7 @@
 				ECCB930127CE24AE00BDB568 /* Main.storyboard */,
 				ECCB932D27CE263200BDB568 /* Model */,
 				EC7A191A27D1D65400360BCF /* AppLogic */,
-				ECCB933927CE3DAF00BDB568 /* Cells */,
+				ECCB933927CE3DAF00BDB568 /* Views */,
 				ECCB933227CE26EE00BDB568 /* Controllers */,
 				ECCB930427CE24B000BDB568 /* Assets.xcassets */,
 				ECCB930627CE24B000BDB568 /* LaunchScreen.storyboard */,
@@ -218,12 +218,12 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		ECCB933927CE3DAF00BDB568 /* Cells */ = {
+		ECCB933927CE3DAF00BDB568 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				ECCB933727CE3DA700BDB568 /* RepoTableViewCell.swift */,
 			);
-			path = Cells;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

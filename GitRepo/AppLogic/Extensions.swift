@@ -38,10 +38,13 @@ extension String {
         }
         return newUrl
     }
-    func base64Decoded() -> String? {
+    func readmeDecoded() -> NSAttributedString? {
         guard let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) else { return nil }
-            return String(data: data, encoding: .utf8)
-        }
+        
+        let decodedString = String(data: data, encoding: .utf8)
+        let attributedString = try? NSAttributedString(markdown: (decodedString)!)
+        return attributedString
+    }
 }
 
 // MARK: LanguageColors
@@ -66,5 +69,16 @@ extension CodingLang {
                 return UIColor(red: 53.0/255, green: 114.0/255, blue: 165.0/255, alpha: 1.0)
             }
         }
+    }
+}
+
+extension UIImageView{
+    func rotate() {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .repeat, animations: { () -> Void in
+            self.transform = self.transform.rotated(by: .pi)
+        })
+    }
+    func stoprotating()  {
+        self.layer.removeAllAnimations()
     }
 }

@@ -14,7 +14,7 @@ class AuthViewController: UIViewController {
     @IBOutlet private var tokenTextField: UITextField!
     @IBOutlet private var errorLabel: UILabel!
     @IBOutlet private var authButton: UIButton!
-    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private var activityIndicator: UIImageView!
     
     private var buttonConstraint: NSLayoutConstraint?
     private var originalButtonText: String?
@@ -68,19 +68,21 @@ class AuthViewController: UIViewController {
             appLogic.signIn(token: token) { [weak self] (userInfo, error) in
                 switch (userInfo, error) {
                 case (let user, nil):
+                    self?.hideLoading()
                     guard let user = user else { return }
                     
                     KeyValueStorage.shared.authToken = token
                     KeyValueStorage.shared.userName = user.username
                     
                     self?.openRepos()
-
                 case (nil, let error):
+                    self?.hideLoading()
                     if let error = error {
                         self?.turnEverythingRed()
                         print(error)
                     }
                 default:
+                    self?.hideLoading()
                     print("switch in signIn get default")
                     return
                 }
@@ -88,7 +90,6 @@ class AuthViewController: UIViewController {
         } else {
             self.turnEverythingRed()
         }
-        hideLoading()
     }
     
     // MARK: borderColor()
@@ -128,11 +129,12 @@ class AuthViewController: UIViewController {
         authButton.setTitle("", for: .normal)
         
         activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
+        activityIndicator.rotate()
     }
     private func hideLoading() {
         authButton.setTitle(originalButtonText, for: .normal)
-        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        activityIndicator.stoprotating()
     }
     
     // MARK: Segues
