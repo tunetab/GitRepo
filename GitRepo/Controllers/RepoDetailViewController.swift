@@ -137,12 +137,12 @@ class RepositoryDetailInfoViewController: UIViewController {
         let decodedContent = content?.decodeBase64()
         
         if let decodedContent = decodedContent {
-            print(MarkdownParser().parse(decodedContent))
-//            self.readmeLabel.attributedText = MarkdownParser().parse(decodedContent)
-            self.readmeLabel.text = decodedContent
+            let markdownParser = MarkdownParser(font: UIFont.systemFont(ofSize: 16), color: UIColor.white)
+            self.readmeLabel.attributedText = markdownParser.parse(decodedContent)
         } else {
             self.readmeLabel.text = "No README.md"
         }
+        
         
         self.readmeLabel.isHidden = false
     }
