@@ -9,12 +9,13 @@ import Foundation
 import Alamofire
 
 enum RepoErrors: Error {
-    case accessTokenIsMissing
+    case badTokenAccess
     case validationFailed
 }
 
 class AppRepository {
     
+    //MARK: signIn
     func signIn(token: String, completion: @escaping (UserInfo?, Error?) -> Void) {
         let headers: HTTPHeaders = [
             "Authorization": "token \(token)"
@@ -30,15 +31,21 @@ class AppRepository {
                     return
                 }
             case .failure(let error):
+                guard let response = responseData.response,
+                      response.statusCode != 401 else {
+                          completion(nil, RepoErrors.badTokenAccess)
+                          return
+                      }
                 completion(nil, error)
             }
         }
     }
     
+    // MARK: getRepoList
     func getRepositories(completion: @escaping ([Repo]?, Error?) -> Void) {
         guard let token = KeyValueStorage.shared.authToken,
             let _ = KeyValueStorage.shared.userName else {
-            completion(nil, RepoErrors.accessTokenIsMissing)
+            completion(nil, RepoErrors.badTokenAccess)
             return
         }
         let headers: HTTPHeaders = [
@@ -60,10 +67,11 @@ class AppRepository {
         }
     }
     
+    //MARK: getDetail
     func getRepository(repoId: String, completion: @escaping (RepoDetails?, Error?) -> Void) {
         guard let token = KeyValueStorage.shared.authToken,
             let username = KeyValueStorage.shared.userName else {
-            completion(nil, RepoErrors.accessTokenIsMissing)
+            completion(nil, RepoErrors.badTokenAccess)
             return
         }
         let headers: HTTPHeaders = [
@@ -85,10 +93,11 @@ class AppRepository {
         }
     }
           
+    // MARK: getReadme
     func getRepositoryReadme(ownerName: String, repositoryName: String, branchName: String, completion: @escaping (String?, Error?) -> Void) {
         guard let _ = KeyValueStorage.shared.authToken,
             let _ = KeyValueStorage.shared.userName else {
-            completion(nil, RepoErrors.accessTokenIsMissing)
+            completion(nil, RepoErrors.badTokenAccess)
             return
         }
         let headers: HTTPHeaders = [

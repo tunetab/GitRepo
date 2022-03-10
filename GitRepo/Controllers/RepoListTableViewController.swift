@@ -44,7 +44,7 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
                 self?.setContentView(repos: repos!)
             case (nil, let error):
                 print(error!)
-                guard error as? RepoErrors == RepoErrors.accessTokenIsMissing else {
+                guard error as? RepoErrors != RepoErrors.badTokenAccess else {
                     self?.exitAccount()
                     return
                 }
@@ -91,7 +91,7 @@ class RepositoriesListViewController: UIViewController, UITableViewDataSource, U
         cell.updateCell(repo: repo)
         cell.selectionStyle = .none
         
-        let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 1))
+        let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.height, height: 1))
         separatorView.backgroundColor = UIColor(red: 33.0/255, green: 38.0/255, blue: 45.0/255, alpha: 1.0)
         cell.addSubview(separatorView)
         

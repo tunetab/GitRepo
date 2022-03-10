@@ -38,12 +38,10 @@ extension String {
         }
         return newUrl
     }
-    func readmeDecoded() -> NSAttributedString? {
+    func decodeBase64() -> String? {
         guard let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) else { return nil }
-        
-        let decodedString = String(data: data, encoding: .utf8)
-        let attributedString = try? NSAttributedString(markdown: (decodedString)!)
-        return attributedString
+
+        return String(data: data, encoding: .utf8)
     }
 }
 
@@ -72,6 +70,7 @@ extension CodingLang {
     }
 }
 
+// MARK: images
 extension UIImageView{
     func rotate() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .repeat, animations: { () -> Void in

@@ -6,6 +6,7 @@ target 'GitRepo' do
   use_frameworks!
 
 pod 'Alamofire', '4.9.1'
+pod "MarkdownKit"
 
   # Pods for GitRepo
 

@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-GitRepo-GitRepoUITests/Pods-GitRepo-GitRepoUITests-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/MarkdownKit/MarkdownKit.framework

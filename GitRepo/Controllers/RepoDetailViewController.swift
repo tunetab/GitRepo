@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MarkdownKit
 
 class RepositoryDetailInfoViewController: UIViewController {
 
@@ -16,14 +17,16 @@ class RepositoryDetailInfoViewController: UIViewController {
     
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var connectionErrorView: UIView!
+    @IBOutlet private var loadErrorView: UIView!
+    
     @IBOutlet private var activityIndicator: UIImageView!
+    
     @IBOutlet private var linkButton: UIButton!
     @IBOutlet private var licenseLabel: UILabel!
     @IBOutlet private var starsLabel: UILabel!
     @IBOutlet private var forksLabel: UILabel!
     @IBOutlet private var watchersLabel: UILabel!
     @IBOutlet private var readmeLabel: UILabel!
-    
     
     // MARK: viewDidLoad()
     override func viewDidLoad() {
@@ -32,6 +35,7 @@ class RepositoryDetailInfoViewController: UIViewController {
         setView()
     }
     
+    // MARK: viewWillAppear()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -49,6 +53,7 @@ class RepositoryDetailInfoViewController: UIViewController {
     private func loadRepoDetail(){
         self.scrollView.isHidden = true
         self.connectionErrorView.isHidden = true
+        self.loadErrorView.isHidden = true
         self.readmeLabel.isHidden = true
         
         guard let repo = repo else {
@@ -60,11 +65,13 @@ class RepositoryDetailInfoViewController: UIViewController {
             case (let repo, nil):
                 self?.setContentView(repo: repo!)
             case (nil, let error):
-                guard error as? RepoErrors == RepoErrors.accessTokenIsMissing else {
+                guard error as? RepoErrors != RepoErrors.badTokenAccess else {
                     self?.exitAccount()
                     return
                 }
                 print(error!)
+                self?.activityIndicator.isHidden = true
+                self?.activityIndicator.stoprotating()
                 self?.connectionErrorView.isHidden = false
             default:
                 print("switch in RepoDetails get default")
@@ -76,6 +83,7 @@ class RepositoryDetailInfoViewController: UIViewController {
     // MARK: loadReadme()
     private func loadReadme() {
         self.connectionErrorView.isHidden = true
+        self.loadErrorView.isHidden = true
         self.activityIndicator.rotate()
         self.activityIndicator.isHidden = false
         
@@ -87,14 +95,16 @@ class RepositoryDetailInfoViewController: UIViewController {
         appLogic.getRepositoryReadme(ownerName: repo.owner.username, repositoryName: repo.name, branchName: "") { [weak self] (readme, error) in
             switch (readme, error) {
             case (let content, nil):
-                self?.setReadmeView(text: content)
+                self?.setReadmeView(content: content)
             case (nil, let error):
-                guard error as? RepoErrors == RepoErrors.accessTokenIsMissing else {
+                guard error as? RepoErrors != RepoErrors.badTokenAccess else {
                     self?.exitAccount()
                     return
                 }
                 print(error!)
-                self?.connectionErrorView.isHidden = false
+                self?.activityIndicator.isHidden = true
+                self?.activityIndicator.stoprotating()
+                self?.loadErrorView.isHidden = false
             default:
                 print("switch in RepoDetails get default")
                 return
@@ -121,11 +131,19 @@ class RepositoryDetailInfoViewController: UIViewController {
     }
     
     // MARK: setReadmeView()
-    private func setReadmeView(text: String?){
+    private func setReadmeView(content: String?){
         self.activityIndicator.isHidden = true
         self.activityIndicator.stoprotating()
-        let attributedString = text?.readmeDecoded() ?? NSAttributedString("No README.md")
-        self.readmeLabel.attributedText = attributedString
+        let decodedContent = content?.decodeBase64()
+        
+        if let decodedContent = decodedContent {
+            print(MarkdownParser().parse(decodedContent))
+//            self.readmeLabel.attributedText = MarkdownParser().parse(decodedContent)
+            self.readmeLabel.text = decodedContent
+        } else {
+            self.readmeLabel.text = "No README.md"
+        }
+        
         self.readmeLabel.isHidden = false
     }
     
@@ -134,7 +152,9 @@ class RepositoryDetailInfoViewController: UIViewController {
         self.loadRepoDetail()
         self.loadReadme()
     }
-    
+    @IBAction func refreshReadmeButtonTapped(_ sender: Any) {
+        self.loadReadme()
+    }
     
     // MARK: followLink()
     @IBAction private func followLink(_ sender: Any) {

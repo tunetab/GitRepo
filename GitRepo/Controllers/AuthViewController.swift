@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-class AuthViewController: UIViewController {
+class AuthViewController: UIViewController, UIAlertViewDelegate {
     let appLogic = AppRepository()
     
     @IBOutlet private var tokenTextField: UITextField!
@@ -77,9 +77,11 @@ class AuthViewController: UIViewController {
                     self?.openRepos()
                 case (nil, let error):
                     self?.hideLoading()
-                    if let error = error {
+                    if error as? RepoErrors == RepoErrors.badTokenAccess {
                         self?.turnEverythingRed()
-                        print(error)
+                        print(error!)
+                    } else {
+                        self?.showAlert(error: error!)
                     }
                 default:
                     self?.hideLoading()
@@ -135,6 +137,21 @@ class AuthViewController: UIViewController {
         authButton.setTitle(originalButtonText, for: .normal)
         activityIndicator.isHidden = true
         activityIndicator.stoprotating()
+    }
+    
+    // MARK: showAlert()
+    private func showAlert(error: Error){
+        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+        alert.view.backgroundColor = .black
+        alert.view.tintColor = .white
+        
+        let okAction = UIAlertAction(title: "Ok", style: .cancel) { _ in
+            print(error)
+        }
+        
+        alert.addAction(okAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: Segues
